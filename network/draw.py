@@ -83,9 +83,9 @@ def drawNetworkGraph(G, graph_pos, addresses = None):
     node_adjacencies = []
     node_text = []
     node_list = list(graph.nodes())
-    for node, adjacencies in enumerate(graph.adjacency()):
-        node_adjacencies.append(len(adjacencies[1]))
-        node_text.append(node_list[node] + '# of connections: '+str(len(adjacencies[1])))
+    for node, val in enumerate(graph.degree()):
+        node_adjacencies.append(val)
+        node_text.append(node_list[node] + '# of connections: '+str(val))
 
     node_trace.marker.color = node_adjacencies
     node_trace.text = node_text
