@@ -33,6 +33,9 @@ last_selectedData_price = None
 last_clickData_attr = None
 active_traits = None
 
+LARGE_FONT_SIZE = 14
+SMALL_FONT_SIZE = 11
+
 app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = makeLayout(data_df, table_df, traits_list)
@@ -68,10 +71,10 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
         children = [
             html.Div([
                 html.Img(src=img_src, style={"width": "100%"}),
-                html.P(f"{nft_name}", style={"color": "darkblue",'fontSize': 11}),
-                html.P(f"{', '.join(traits)}", style = {'fontSize': 8}),
-                html.P(f"price : {price:.4g}", style = {'fontSize': 8}),
-                html.P(f"number of sales : {num_sales}", style = {'fontSize': 8}),
+                html.P(f"{nft_name}", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
+                html.P(f"{', '.join(traits)}", style = {'fontSize': SMALL_FONT_SIZE}),
+                html.P(f"price : {price:.4g}", style = {'fontSize': SMALL_FONT_SIZE}),
+                html.P(f"number of sales : {num_sales}", style = {'fontSize': SMALL_FONT_SIZE}),
             ], style={'width': '100px', 'whiteSpace': 'normal'})
         ]
         #print(pt,bbox,num)
@@ -89,15 +92,15 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
 
                 children = [
                     html.Div([
-                        html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': 11}),
+                        html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
                         html.Img(src=src, style={"width": "100%"}),
-                        html.P(f"Owner collection value : {pt['value']}", style = {'fontSize': 8}),
+                        html.P(f"Owner collection value : {pt['value']}", style = {'fontSize': SMALL_FONT_SIZE}),
                     ], style={'width': '100px', 'whiteSpace': 'normal'})
                 ]
             else:
                 children = [
                     html.Div([
-                        html.P(f"Total value: {pt['value']}", style = {'fontSize': 8})
+                        html.P(f"Total value: {pt['value']}", style = {'fontSize': SMALL_FONT_SIZE})
                     ])
                 ]
             return True, bbox, children, 'left', True, True, True, True
@@ -119,9 +122,9 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
 
                     children = [
                         html.Div([
-                            html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': 11}),
+                            html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
                             html.Img(src=src, style={"width": "100%"}),
-                            html.P(f"# of connections : {n_connections}", style = {'fontSize': 8}),
+                            html.P(f"# of connections : {n_connections}", style = {'fontSize': SMALL_FONT_SIZE}),
                         ], style={'width': '100px', 'whiteSpace': 'normal'})
                     ]
 
