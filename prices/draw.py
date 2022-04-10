@@ -36,7 +36,7 @@ def linkTreeChartToStripChart(hoverData, point_color, price_strip_fig, token_df_
             x='num_sales',
             color=updateColor,
             stripmode='overlay',
-            color_discrete_map={'red': 'red', 'blue': 'blue'},
+            color_discrete_map={'red': 'red', 'blue': '#636EFA'},
             custom_data=['name']
         )
         updateStrip.update_layout(
@@ -64,7 +64,7 @@ def linkAttrChartToStripChart(hoverData, point_color, price_strip_fig, strip_dat
             y='last_sale_total_price',
             x='num_sales',
             color=updateColor,
-            color_discrete_map={'red': 'red', 'blue': 'blue'},
+            color_discrete_map={'red': 'red', 'blue': '#636EFA'},
             stripmode='overlay',
             custom_data=['name']
         )
