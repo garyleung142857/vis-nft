@@ -134,8 +134,8 @@ def drawNetworkGraph(G, graph_pos, addresses = [], df = None):
     
     fig.update_traces(hovertemplate="<extra></extra>")
 
-    fig.update_xaxes(constrain="domain")
-    fig.update_yaxes(scaleanchor="x", scaleratio=0.7)
-    # 0.7 can be changed. Not sure how to get from the fig object
+    # fig.update_xaxes(constrain="domain")
+    # fig.update_yaxes(scaleanchor="x", scaleratio=0.7)
+    # # 0.7 can be changed. Not sure how to get from the fig object
 
     return fig
