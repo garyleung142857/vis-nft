@@ -131,5 +131,7 @@ def drawNetworkGraph(G, graph_pos, addresses = [], df = None):
                     layer="above"
                 )
             )
+    
+    fig.update_traces(hovertemplate="<extra></extra>")
 
     return fig
