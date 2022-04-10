@@ -40,6 +40,11 @@ def price_range_graph(df, traits, num_buckets=4, interested_traits = [], traits_
         data.append(go_scatter)
     fig = go.Figure(data=data)
 
-    fig.update_layout(barmode='group', yaxis_tickformat='0.00%')
+    fig.update_layout(
+        barmode='group',
+        yaxis_tickformat='0.00%',
+        margin=dict(b=20,l=5,r=5,t=40),
+    )
+
     # fig.update_yaxes(rangemode='tozero')
     return fig

@@ -33,6 +33,9 @@ last_selectedData_price = None
 last_clickData_attr = None
 active_traits = None
 
+LARGE_FONT_SIZE = 14
+SMALL_FONT_SIZE = 11
+
 app = JupyterDash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = makeLayout(data_df, table_df, traits_list)
@@ -54,10 +57,6 @@ app.layout = makeLayout(data_df, table_df, traits_list)
     ],
 )
 def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
-    hoverDatas = [hoverData_price, hoverData_treemap, hoverData_network]
-    all_None = all([hoverData is None for hoverData in hoverDatas])
-    if all_None:
-        return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
     if hoverData_price is not None :
         pt = hoverData_price["points"][0]
         bbox = pt["bbox"]
@@ -72,10 +71,10 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
         children = [
             html.Div([
                 html.Img(src=img_src, style={"width": "100%"}),
-                html.P(f"{nft_name}", style={"color": "darkblue",'fontSize': 11}),
-                html.P(f"{', '.join(traits)}", style = {'fontSize': 8}),
-                html.P(f"price : {price:.4g}", style = {'fontSize': 8}),
-                html.P(f"number of sales : {num_sales}", style = {'fontSize': 8}),
+                html.P(f"{nft_name}", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
+                html.P(f"{', '.join(traits)}", style = {'fontSize': SMALL_FONT_SIZE}),
+                html.P(f"price : {price:.4g}", style = {'fontSize': SMALL_FONT_SIZE}),
+                html.P(f"number of sales : {num_sales}", style = {'fontSize': SMALL_FONT_SIZE}),
             ], style={'width': '100px', 'whiteSpace': 'normal'})
         ]
         #print(pt,bbox,num)
@@ -84,7 +83,7 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
         pt = hoverData_treemap["points"][0]
         bbox = pt["bbox"]
         if ('label' in list(pt.keys())) :
-            if (len(pt['label'])>30):
+            if (len(pt['label'])>30):  # Check if it is an address
                 
                 img_df = data_df[data_df['owner_address'] == pt['label']]['owner_img_md']
                 src = img_df.iloc[0]
@@ -93,15 +92,18 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
 
                 children = [
                     html.Div([
-                        html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': 11}),
+                        html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
                         html.Img(src=src, style={"width": "100%"}),
-                        html.P(f"Owner collection value : {pt['value']}", style = {'fontSize': 8}),
+                        html.P(f"Owner collection value : {pt['value']}", style = {'fontSize': SMALL_FONT_SIZE}),
                     ], style={'width': '100px', 'whiteSpace': 'normal'})
                 ]
-
-                return True, bbox, children, 'left', True, True, True, True
-            else: 
-                return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
+            else:
+                children = [
+                    html.Div([
+                        html.P(f"Total value: {pt['value']}", style = {'fontSize': SMALL_FONT_SIZE})
+                    ])
+                ]
+            return True, bbox, children, 'left', True, True, True, True
         else: 
             return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
     elif hoverData_network is not None :
@@ -120,21 +122,15 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
 
                     children = [
                         html.Div([
-                            html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': 11}),
+                            html.P(f"Owner (identicon)", style={"color": "darkblue",'fontSize': LARGE_FONT_SIZE}),
                             html.Img(src=src, style={"width": "100%"}),
-                            html.P(f"# of connections : {n_connections}", style = {'fontSize': 8}),
+                            html.P(f"# of connections : {n_connections}", style = {'fontSize': SMALL_FONT_SIZE}),
                         ], style={'width': '100px', 'whiteSpace': 'normal'})
                     ]
 
                     return True, bbox, children, 'left', True, True, True, True
-                else: 
-                    return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-            else: 
-                return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-        else: 
-            return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-    else: 
-        return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
+
+    return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
 
 def updateFigureFromDf(token_df_filtered, active_traits):
     price_strip_fig, point_color = make_price_strip_fig(token_df_filtered)
