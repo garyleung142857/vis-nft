@@ -260,9 +260,9 @@ def make_hover_figures(
         elif clickData_attr is not None and last_clickData_attr != clickData_attr:
             last_clickData_attr = clickData_attr
             clicked_trait = clickData_attr['points'][0]['customdata'][0]
-            active_traits = [clicked_trait]
             condition = current_df_filtered["traits_list_aslist"].apply(lambda tl: clicked_trait in tl)
             temp_df_filtered = current_df_filtered[condition]
+            active_traits = temp_df_filtered['traits_list_aslist'].sum()
             price_strip_fig, point_color, tree_map_fig, network_fig, attribute_fig, owner_df_filtered = updateFigureFromDf(temp_df_filtered, active_traits)
             shouldUpdate = True
         if (shouldUpdate):
