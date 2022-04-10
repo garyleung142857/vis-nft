@@ -94,15 +94,13 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
                         html.P(f"Owner collection value : {pt['value']}", style = {'fontSize': 8}),
                     ], style={'width': '100px', 'whiteSpace': 'normal'})
                 ]
-
-                return True, bbox, children, 'left', True, True, True, True
             else:
                 children = [
                     html.Div([
                         html.P(f"Total value: {pt['value']}", style = {'fontSize': 8})
                     ])
                 ]
-                return True, bbox, children, 'left', True, True, True, True
+            return True, bbox, children, 'left', True, True, True, True
         else: 
             return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
     elif hoverData_network is not None :
