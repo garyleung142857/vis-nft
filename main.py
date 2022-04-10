@@ -54,10 +54,6 @@ app.layout = makeLayout(data_df, table_df, traits_list)
     ],
 )
 def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
-    hoverDatas = [hoverData_price, hoverData_treemap, hoverData_network]
-    all_None = all([hoverData is None for hoverData in hoverDatas])
-    if all_None:
-        return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
     if hoverData_price is not None :
         pt = hoverData_price["points"][0]
         bbox = pt["bbox"]
@@ -84,7 +80,7 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
         pt = hoverData_treemap["points"][0]
         bbox = pt["bbox"]
         if ('label' in list(pt.keys())) :
-            if (len(pt['label'])>30):
+            if (len(pt['label'])>30):  # Check if it is an address
                 
                 img_df = data_df[data_df['owner_address'] == pt['label']]['owner_img_md']
                 src = img_df.iloc[0]
@@ -100,8 +96,13 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
                 ]
 
                 return True, bbox, children, 'left', True, True, True, True
-            else: 
-                return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
+            else:
+                children = [
+                    html.Div([
+                        html.P(f"Total value: {pt['value']}", style = {'fontSize': 8})
+                    ])
+                ]
+                return True, bbox, children, 'left', True, True, True, True
         else: 
             return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
     elif hoverData_network is not None :
@@ -127,14 +128,8 @@ def show_pic(hoverData_price, hoverData_treemap, hoverData_network):
                     ]
 
                     return True, bbox, children, 'left', True, True, True, True
-                else: 
-                    return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-            else: 
-                return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-        else: 
-            return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
-    else: 
-        return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
+
+    return False, dash.no_update, dash.no_update, dash.no_update, True, True, True, True
 
 def updateFigureFromDf(token_df_filtered, active_traits):
     price_strip_fig, point_color = make_price_strip_fig(token_df_filtered)
