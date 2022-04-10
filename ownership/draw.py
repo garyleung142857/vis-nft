@@ -12,4 +12,6 @@ def make_ownership_tree(df_dc):
     tree_data.loc[tree_data['total_value']<50, 'owner_address_group'] = "Other owner (5-50 ETH)"
     tree_data.loc[tree_data['total_value']<5, 'owner_address_group'] = "Other owner (<5 ETH)"
     figTreemap = px.treemap(tree_data, path=['owner_address_group', 'owner_address'], values='total_value')
+    figTreemap.update_traces(hovertemplate="<extra></extra>")
+    figTreemap.update_layout(margin=dict(b=20,l=5,r=5,t=40))
     return figTreemap, tree_data
