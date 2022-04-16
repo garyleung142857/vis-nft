@@ -18,5 +18,14 @@ Everytime working on the project
 source .venv/bin/activate
 ```
 
-## Loading pickled data (for fast loading)
-Run [pickling.py](pickling.py) first to create pickled data. When there is pickled data, data_reader will use the pickled data.
+## Run the dashboard
+Start the dash server
+
+```sh
+python3 main.py
+```
+
+Default location would be http://localhost:8050
+
+## (Optional) Loading pickled data (for fast loading)
+Run [pickling.py](pickling.py) first to create pickled data. When there is pickled data, data_reader will use the pickled data instead of reloading from csv.
